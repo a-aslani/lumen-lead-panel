@@ -6,13 +6,60 @@ use App\Exports\LeadsExport;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\LeadCollection;
 use App\Models\Lead;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Str;
 
 class LeadController extends Controller
 {
+
+    public function login(Request $request)
+    {
+        $this->validate($request, [
+            'username' => 'required',
+            'password' => 'required'
+        ]);
+
+        $username = $request->input('username');
+        $password = $request->input('password');
+
+        $user = User::where('username', $username)->first();
+        if (!$user) {
+            return response()->json([
+                "message" => "Username not found"
+            ], 401);
+        }
+
+        if ($user->password != $password) {
+            return response()->json([
+                "message" => "Wrong password"
+            ], 401);
+        }
+
+        $token = Str::random(40);
+
+        $user->update([
+            'token' => $token
+        ]);
+
+        return response()->json([
+            'is_valid' => true,
+            'token' => $token,
+            'message' => 'Successfully'
+        ]);
+    }
+
     public function index(Request $request)
     {
+
+        $user = User::where('token', $request->input('token'))->first();
+        if (!$user) {
+            return response()->json([
+                'error' => 'Unauthorized',
+            ], 401);
+        }
+
         $start = "";
         $end = "";
 
@@ -61,6 +108,13 @@ class LeadController extends Controller
     public function search(Request $request, $token)
     {
 
+        $user = User::where('token', $request->input('token'))->first();
+        if (!$user) {
+            return response()->json([
+                'error' => 'Unauthorized',
+            ], 401);
+        }
+
         $start = "";
         $end = "";
 
@@ -82,6 +136,12 @@ class LeadController extends Controller
 
     public function exportLeads(Request $request)
     {
+        $user = User::where('token', $request->input('token'))->first();
+        if (!$user) {
+            return response()->json([
+                'error' => 'Unauthorized',
+            ], 401);
+        }
 
         $start = "";
         $end = "";
@@ -130,7 +190,8 @@ class LeadController extends Controller
     }
 
 
-    public function updateLead(Request $request, $id) {
+    public function updateLead(Request $request, $id)
+    {
         $this->validate($request, [
             'register_api_url' => 'required',
             'added_to_crm' => 'required',
@@ -144,7 +205,7 @@ class LeadController extends Controller
 
         return response()->json([
             "message" => "successfully",
-            "lead"=> new \App\Http\Resources\v1\Lead($lead),
+            "lead" => new \App\Http\Resources\v1\Lead($lead),
         ]);
     }
 
