@@ -9,3 +9,7 @@ $router->group(['namespace' => 'v1', 'prefix' => 'v1'], function () use ($router
     $router->post('/lead/update/{id}', 'LeadController@updateLead');
     $router->post('/login', 'LeadController@login');
 });
+
+$router->group(['namespace' => 'v2', 'prefix' => 'v2'], function () use ($router) {
+    $router->post('/lead', 'LeadController@store');
+});

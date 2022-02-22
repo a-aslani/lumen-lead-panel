@@ -53,12 +53,12 @@ class LeadController extends Controller
     public function index(Request $request)
     {
 
-        $user = User::where('token', $request->input('token'))->first();
-        if (!$user) {
-            return response()->json([
-                'error' => 'Unauthorized',
-            ], 401);
-        }
+//        $user = User::where('token', $request->input('token'))->first();
+//        if (!$user) {
+//            return response()->json([
+//                'error' => 'Unauthorized',
+//            ], 401);
+//        }
 
         $start = "";
         $end = "";
@@ -108,12 +108,12 @@ class LeadController extends Controller
     public function search(Request $request, $token)
     {
 
-        $user = User::where('token', $request->input('token'))->first();
-        if (!$user) {
-            return response()->json([
-                'error' => 'Unauthorized',
-            ], 401);
-        }
+//        $user = User::where('token', $request->input('token'))->first();
+//        if (!$user) {
+//            return response()->json([
+//                'error' => 'Unauthorized',
+//            ], 401);
+//        }
 
         $start = "";
         $end = "";
@@ -136,12 +136,12 @@ class LeadController extends Controller
 
     public function exportLeads(Request $request)
     {
-        $user = User::where('token', $request->input('token'))->first();
-        if (!$user) {
-            return response()->json([
-                'error' => 'Unauthorized',
-            ], 401);
-        }
+//        $user = User::where('token', $request->input('token'))->first();
+//        if (!$user) {
+//            return response()->json([
+//                'error' => 'Unauthorized',
+//            ], 401);
+//        }
 
         $start = "";
         $end = "";
@@ -154,7 +154,7 @@ class LeadController extends Controller
 
         $token = $request->input('token');
 
-        $leads[] = ['firstName', 'lastName', 'phone', 'email', 'country'];
+        $leads[] = ['firstName', 'lastName', 'phone', 'email', 'cid', 'landing_name', 'country'];
 
         if ($start == "" || $end == "") {
             if ($token) {
@@ -173,11 +173,11 @@ class LeadController extends Controller
 
         foreach ($newLeads as $key => $value) {
             unset($newLeads[$key]['id']);
-            unset($newLeads[$key]['token']);
+//            unset($newLeads[$key]['token']);
             unset($newLeads[$key]['created_at']);
             unset($newLeads[$key]['updated_at']);
             unset($newLeads[$key]['crm_name']);
-            unset($newLeads[$key]['landing_url']);
+//            unset($newLeads[$key]['landing_url']);
             unset($newLeads[$key]['added_to_crm']);
             unset($newLeads[$key]['error_message']);
             unset($newLeads[$key]['register_api_url']);
