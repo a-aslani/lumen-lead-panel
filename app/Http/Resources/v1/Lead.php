@@ -22,6 +22,7 @@ class Lead extends JsonResource
             "is_new" => !$this->added_to_crm,
             "error_message" => $this->error_message,
             "register_api_url" => $this->register_api_url,
+            "country_code" => $this->country_code,
         ];
     }
 }

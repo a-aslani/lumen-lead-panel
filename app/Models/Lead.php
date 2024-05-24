@@ -16,6 +16,7 @@ class Lead extends Model {
         "landing_url",
         "added_to_crm",
         "error_message",
-        "register_api_url"
+        "register_api_url",
+        "country_code"
     ];
 }

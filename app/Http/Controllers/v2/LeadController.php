@@ -15,6 +15,7 @@ class LeadController extends \App\Http\Controllers\Controller
             'email' => 'required|email|unique:leads',
             'token' => 'required',
             'register_api_url' => 'required',
+            'country_code' => 'required',
         ]);
 
         Lead::create([
@@ -26,6 +27,7 @@ class LeadController extends \App\Http\Controllers\Controller
             'crm_name' => $request->input('crm_name'),
             'landing_url' => $request->input('landing_url'),
             'register_api_url' => $request->input('register_api_url'),
+            'country_code' => $request->input('country_code'),
         ]);
 
         return response()->json([

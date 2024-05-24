@@ -154,7 +154,7 @@ class LeadController extends Controller
 
         $token = $request->input('token');
 
-        $leads[] = ['firstName', 'lastName', 'phone', 'email', 'cid', 'landing_name', 'country'];
+        $leads[] = ['firstName', 'lastName', 'phone', 'email', 'cid', 'landing_name', 'added_to_crm', 'error_message', 'country_code', 'created_at'];
 
         if ($start == "" || $end == "") {
             if ($token) {
@@ -174,14 +174,14 @@ class LeadController extends Controller
         foreach ($newLeads as $key => $value) {
             unset($newLeads[$key]['id']);
 //            unset($newLeads[$key]['token']);
-            unset($newLeads[$key]['created_at']);
+//            unset($newLeads[$key]['created_at']);
             unset($newLeads[$key]['updated_at']);
             unset($newLeads[$key]['crm_name']);
 //            unset($newLeads[$key]['landing_url']);
-            unset($newLeads[$key]['added_to_crm']);
-            unset($newLeads[$key]['error_message']);
+//            unset($newLeads[$key]['added_to_crm']);
+//            unset($newLeads[$key]['error_message']);
             unset($newLeads[$key]['register_api_url']);
-            $newLeads[$key][] = "IR";
+//            $newLeads[$key][] = "IR";
         }
 
         $leads[] = $newLeads;

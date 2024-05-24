@@ -24,6 +24,7 @@ class LeadCollection extends ResourceCollection
                     "is_new" => !$item->added_to_crm,
                     "error_message" => $item->error_message,
                     "register_api_url" => $item->register_api_url,
+                    "country_code" => $item->country_code,
                 ];
             }),
         ];
