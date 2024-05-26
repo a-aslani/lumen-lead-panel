@@ -8,6 +8,7 @@ use App\Http\Resources\v1\LeadCollection;
 use App\Models\Lead;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Str;
 
@@ -31,7 +32,7 @@ class LeadController extends Controller
             ], 401);
         }
 
-        if ($user->password != $password) {
+        if (!app('hash')->check($password, $user->password)) {
             return response()->json([
                 "message" => "Wrong password"
             ], 401);
